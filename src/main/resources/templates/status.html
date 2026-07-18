@@ -23,14 +23,15 @@
     >
       <h1>
         <img
-          src="assets/img/Logo.png"
+          th:src="@{/assets/img/logo.png}"
           alt="Entra21"
-          height="180"
+          height="120"
         />
         <div>
       </h1>
       <div>
       <div class="d-none d-md-block">Carlos Eduardo</div>
+      <br>
       <div class="d-md-block">
         <button class="btn btn-outline-primary ">
           <i class="bi bi-list"></i>
@@ -48,23 +49,23 @@
            <nav class="bg-dark vh-100 " style="width: 300px">
         <ul class="nav nav-pills flex-column py-4 px-3">
           <li class="nav-item">
-            <a href="#" class="nav-link text-white">
-              <i class="bi bi-house"></i> <span>Pagina Inicial</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link text-white"
-              ><i class="bi bi-house"></i> <span>Lista de Veículos</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a href="#" class=" nav-link active"
-              ><i class="bi bi-house"></i> <span>Status</span></a
-            >
-          </li>
-           <li class="nav-item">
-            <a href="#" class="nav-link text-white"
-              ><i class="bi bi-house"></i> <span>Admin</span></a
+              <a href="/inicio" class="nav-link text-white">
+                  <i class="bi bi-house"></i> <span>Pagina Inicial</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/veiculos" class="nav-link text-white"
+                  ><i class="bi bi-car-front"></i> <span>Lista de Veículos</span></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="/status" class="nav-link active"
+                  ><i class="bi bi-clipboard-data"></i> <span>Status</span></a
+                >
+              </li>
+              <li class="nav-item">
+                <a href="/admin" class="nav-link text-white"
+                  ><i class="bi bi-person-gear"></i> <span>Admin</span></a
             >
           </li>
         </ul>

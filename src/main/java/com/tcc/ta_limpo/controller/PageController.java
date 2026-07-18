@@ -33,4 +33,14 @@ public class PageController {
     public String veiculos() {
         return "veiculos";
     }
+
+    @GetMapping("/status")
+    public String status() {
+        return "status";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
 }
