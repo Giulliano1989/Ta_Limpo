@@ -27,6 +27,7 @@ function popularTabela(veiculos) {
                 <td>${veiculo.modelo}</td>
                 <td>${veiculo.placa}</td>
                 <td><button class="btn btn-primary" type="submit">Iniciar</button></td>
+                <td><button class="btn btn-danger" type="submit" onclick="excluirVeiculo(${veiculo.id})">Excluir</button></td>
             </tr>
         `;
     }
@@ -38,4 +39,40 @@ function popularTabela(veiculos) {
     }
 }
 
+async function excluirVeiculo(id) {
+    if (!confirm("Tem certeza que deseja excluir este veículo?")) {
+        return;
+    }
+
+    const url = `${GLOBAL_URL}/${id}`;
+
+    try {
+        await fetch(url, { method: "DELETE" });} catch (error) {
+        console.error(error);
+        alert("Não foi possível excluir o veículo");
+    }finally {
+        carregarVeiculos();
+    }
+}
+
+
+
+async function cadastrarVeiculo() {
+    const veiculo = {
+        marca: document.querySelector("#marca").value,
+        modelo: document.querySelector("#modelo").value,
+        placa: document.querySelector("#placa").value
+    };
+    try {
+        await fetch(GLOBAL_URL, {
+            method: "POST",
+            headers: { "content-type" : "application/json" },
+            body: JSON.stringify(veiculo)
+        });
+        carregarVeiculos();
+    } catch (error) {
+        console.error(error);
+        alert("Não foi possível cadastrar o veículo");
+    }
+}
 carregarVeiculos();
