@@ -62,6 +62,7 @@ async function cadastrarVeiculo() {
     marca: document.querySelector("#marca").value,
     modelo: document.querySelector("#modelo").value,
     placa: document.querySelector("#placa").value,
+    status: "aguardando",
   };
   try {
     await fetch(GLOBAL_URL, {
@@ -69,10 +70,19 @@ async function cadastrarVeiculo() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify(veiculo),
     });
+    fecharModal();
     carregarVeiculos();
   } catch (error) {
     console.error(error);
     alert("Não foi possível cadastrar o veículo");
+  }
+}
+
+function fecharModal() {
+  const modalHtml = document.querySelector("#modal_veiculos");
+  if (modalHtml) {
+    const modal = bootstrap.Modal.getOrCreateInstance(modalHtml);
+    modal.hide();
   }
 }
 carregarVeiculos();
