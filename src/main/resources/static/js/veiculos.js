@@ -3,12 +3,11 @@ const GLOBAL_URL = "https://6a56d0efb17de7bebbde7e05.mockapi.io/veiculos";
 async function carregarVeiculos() {
   try {
     const response = await fetch(GLOBAL_URL);
-    const veiculos = await response.json();
-
     if (!response.ok) {
       throw new Error("Erro na requisição");
     }
 
+    const veiculos = await response.json();
     popularTabela(veiculos);
   } catch (error) {
     console.error(error);
@@ -22,12 +21,12 @@ function popularTabela(veiculos) {
   for (const veiculo of veiculos) {
     html += `
             <tr>
-                <td>${veiculo.id}</td>
-                <td>${veiculo.marca}</td>
-                <td>${veiculo.modelo}</td>
-                <td>${veiculo.placa}</td>
-                <td><button class="btn btn-primary" type="submit">Iniciar</button>
-                <button class="btn btn-danger" type="submit" onclick="excluirVeiculo(${veiculo.id})">Excluir</button></td>
+                <td>${escaparHtml(veiculo.id)}</td>
+                <td>${escaparHtml(veiculo.marca)}</td>
+                <td>${escaparHtml(veiculo.modelo)}</td>
+                <td>${escaparHtml(veiculo.placa)}</td>
+                <td><button class="btn btn-primary" type="button" onclick="atualizarStatus(${veiculo.id}, 'lavando')">Iniciar</button>
+                <button class="btn btn-danger" type="button" onclick="excluirVeiculo(${veiculo.id})">Excluir</button></td>
                 
             </tr>
         `;
@@ -48,7 +47,10 @@ async function excluirVeiculo(id) {
   const url = `${GLOBAL_URL}/${id}`;
 
   try {
-    await fetch(url, { method: "DELETE" });
+    const response = await fetch(url, { method: "DELETE" });
+    if (!response.ok) {
+      throw new Error("Erro na exclusão");
+    }
   } catch (error) {
     console.error(error);
     alert("Não foi possível excluir o veículo");
@@ -58,6 +60,12 @@ async function excluirVeiculo(id) {
 }
 
 async function cadastrarVeiculo() {
+  const form = document.querySelector("#form-cadastro-veiculo");
+  if (!form || !form.checkValidity()) {
+    form?.reportValidity();
+    return;
+  }
+
   const veiculo = {
     marca: document.querySelector("#marca").value,
     modelo: document.querySelector("#modelo").value,
@@ -65,17 +73,44 @@ async function cadastrarVeiculo() {
     status: "aguardando",
   };
   try {
-    await fetch(GLOBAL_URL, {
+    const response = await fetch(GLOBAL_URL, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(veiculo),
     });
+    if (!response.ok) {
+      throw new Error("Erro no cadastro");
+    }
+    form.reset();
     fecharModal();
     carregarVeiculos();
   } catch (error) {
     console.error(error);
     alert("Não foi possível cadastrar o veículo");
   }
+}
+
+async function atualizarStatus(id, status) {
+  try {
+    const response = await fetch(`${GLOBAL_URL}/${id}`, {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    if (!response.ok) {
+      throw new Error("Erro na atualização do status");
+    }
+    carregarVeiculos();
+  } catch (error) {
+    console.error(error);
+    alert("Não foi possível atualizar o status");
+  }
+}
+
+function escaparHtml(valor) {
+  const elemento = document.createElement("span");
+  elemento.textContent = valor ?? "";
+  return elemento.innerHTML;
 }
 
 function fecharModal() {

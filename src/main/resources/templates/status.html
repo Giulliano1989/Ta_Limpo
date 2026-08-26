@@ -19,51 +19,14 @@
   </head>
 
   <body class="bg-light">
-    <header class="bg-white border-bottom border-primary">
-      <div
-        class="container-fluid px-4 py-2 d-flex justify-content-between align-items-center"
-      >
-        <img th:src="@{/assets/img/logo.png}" alt="TA LIMPO" height="90" />
-
-        <div class="d-none d-md-flex align-items-center gap-2">
-          <i class="bi bi-person-circle fs-3 text-primary"></i>
-
-          <div>
-            <strong class="d-block"> Carlos Eduardo </strong>
-          </div>
-        </div>
-      </div>
-    </header>
+    <header th:replace="~{fragments/layout :: cabecalho}"></header>
+    
+    <div th:replace="~{fragments/layout :: menuMobile('status')}"></div>
+    
 
     <div class="container-fluid">
       <div class="row">
-        <aside class="col-md-3 col-lg-2 bg-dark min-vh-100 d-none d-md-block">
-          <nav class="nav nav-pills flex-column gap-2 p-3">
-            <a href="/inicio" class="nav-link text-white">
-              <i class="bi bi-house me-2"></i>
-
-              Página Inicial
-            </a>
-
-            <a href="/veiculos" class="nav-link text-white">
-              <i class="bi bi-car-front me-2"></i>
-
-              Lista de Veículos
-            </a>
-
-            <a href="/status" class="nav-link active text-white">
-              <i class="bi bi-clipboard-data me-2"></i>
-
-              Status
-            </a>
-
-            <a href="/admin" class="nav-link text-white">
-              <i class="bi bi-person-gear me-2"></i>
-
-              Admin
-            </a>
-          </nav>
-        </aside>
+        <aside th:replace="~{fragments/layout :: menuLateral('status')}"></aside>
 
         <main class="col-md-9 col-lg-10 p-3 p-md-4">
           <div class="mb-4">

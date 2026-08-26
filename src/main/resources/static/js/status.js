@@ -62,6 +62,8 @@ function listarAguardando(veiculos, lista) {
   lista.innerHTML = html;
 }
 
+
+
 function init() {
   carregarVeiculosAguardando();
   carregarVeiculosLavando();
