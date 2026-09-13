@@ -69,3 +69,8 @@ CREATE TABLE lavagem (
         ON UPDATE CASCADE
         ON DELETE RESTRICT
 ) ENGINE=InnoDB;
+
+INSERT INTO usuario
+    (nome, username, password, permissao)
+VALUES
+    ('Administrador', 'admin', 'SENHA_CRIPTOGRAFADA', 'admin');
