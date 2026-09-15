@@ -18,79 +18,14 @@
   </head>
   <body>
     
-    <header class="d-flex justify-content-between bg-light align-items-center px-4 py-3 border-bottom border-primary">
-      <div class="d-flex align-items-center  gap-3">
-        <img th:src="@{/assets/img/logo.png}" alt="Entra21" height="120" />
-       
-      </div>
-      <div> <span class="fs-4 d-none d-md-inline">Carlos Eduardo</span></div>
-      <button
-        class="btn btn-outline-primary d-md-none"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#sidebar"
-        aria-controls="sidebar"
-        aria-label="Abrir menu"
-      >
-        <i class="bi bi-list"></i>
-      </button>
-    </header>
+    <div th:replace="~{fragments/layout :: header}"></div>
 
-    <div class="d-md-flex">
-      
-      <div class="offcanvas offcanvas-start d-md-none bg-dark text-white" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
-        <div class="offcanvas-header">
-          <h5 id="sidebarLabel" class="text-white">Menu</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
-        </div>
-        <div class="offcanvas-body p-0">
-          <nav class="nav nav-pills flex-column py-4 px-3">
-            <a href="/inicio" class="nav-link text-white">
-              <i class="bi bi-house"></i> <span>Pagina Inicial</span>
-            </a>
-            <a href="/veiculos" class="nav-link text-white">
-              <i class="bi bi-car-front"></i> <span>Lista de Veículos</span>
-            </a>
-            <a href="/status" class="nav-link text-white">
-              <i class="bi bi-clipboard-data"></i> <span>Status</span>
-            </a>
-            <a href="/admin" class="nav-link active text-white">
-              <i class="bi bi-person-gear"></i> <span>Admin</span>
-            </a>
-          </nav>
-        </div>
-      </div>
+    <div class="container-fluid">
+      <div class="row">
+      <div th:replace="~{fragments/layout :: sidebar('admin')}"></div>
 
       
-      <div class="d-none d-md-block">
-        <nav class="bg-dark vh-100" style="width: 300px">
-          <ul class="nav nav-pills flex-column py-4 px-3">
-            <li class="nav-item">
-              <a href="/inicio" class="nav-link text-white">
-                <i class="bi bi-house"></i> <span>Pagina Inicial</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/veiculos" class="nav-link text-white">
-                <i class="bi bi-car-front"></i> <span>Lista de Veículos</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/status" class="nav-link text-white">
-                <i class="bi bi-clipboard-data"></i> <span>Status</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="/admin" class="nav-link active text-white">
-                <i class="bi bi-person-gear"></i> <span>Admin</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-
-      
-      <main class="w-100 p-4">
+      <main class="col-md-9 col-lg-10 p-3 p-md-4">
         <h2 class="border-bottom border-primary pb-3 mb-3">Administração</h2>
        
         <div class="row g-3">
@@ -123,6 +58,7 @@
 
         </div>
       </main>
+      </div>
     </div>
 
     <footer></footer>

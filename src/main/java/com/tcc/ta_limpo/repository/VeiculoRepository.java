@@ -92,8 +92,8 @@ public class VeiculoRepository {
         jdbcTemplate.update(connection -> {
             var statement = connection.prepareStatement(
                     "INSERT INTO marca (nome) VALUES (?) "
-                            + "ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)",
-                    new String[] { "id" }
+                    + "ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)",
+                    new String[]{"id"}
             );
             statement.setString(1, veiculo.getMarca());
             return statement;
@@ -105,7 +105,7 @@ public class VeiculoRepository {
         jdbcTemplate.update(connection -> {
             var statement = connection.prepareStatement(
                     "INSERT INTO veiculo (modelo, marca_id) VALUES (?, ?)",
-                    new String[] { "id" }
+                    new String[]{"id"}
             );
             statement.setString(1, veiculo.getModelo());
             statement.setLong(2, marcaId);
@@ -116,8 +116,8 @@ public class VeiculoRepository {
         jdbcTemplate.update(connection -> {
             var statement = connection.prepareStatement(
                     "INSERT INTO lavagem (veiculo_id, placa, status) "
-                            + "VALUES (?, ?, 'aguardando')",
-                    new String[] { "id" }
+                    + "VALUES (?, ?, 'aguardando')",
+                    new String[]{"id"}
             );
             statement.setLong(1, veiculoKeyHolder.getKey().longValue());
             statement.setString(2, veiculo.getPlaca());
