@@ -1,4 +1,4 @@
-const GLOBAL_URL = "https://6a56d0efb17de7bebbde7e05.mockapi.io/veiculos";
+const GLOBAL_URL = "/api/veiculos";
 
 async function carregarVeiculos() {
   try {
@@ -26,9 +26,9 @@ function popularTabela(veiculos) {
                 <td>${veiculo.marca}</td>
                 <td>${veiculo.modelo}</td>
                 <td>${veiculo.placa}</td>
-                <td><button class="btn btn-primary" type="submit">Iniciar</button>
-                <button class="btn btn-danger" type="submit" onclick="excluirVeiculo(${veiculo.id})">Excluir</button></td>
-                
+                <td>
+                    <button class="btn btn-danger" type="submit" onclick="excluirVeiculo(${veiculo.id})">Excluir</button>
+                </td>
             </tr>
         `;
   }

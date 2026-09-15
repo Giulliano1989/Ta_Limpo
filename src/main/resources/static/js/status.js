@@ -1,7 +1,6 @@
-const GLOBAL_URL = "https://6a56d0efb17de7bebbde7e05.mockapi.io/veiculos";
-
+const GLOBAL_URL = "/api/veiculos";
 async function carregarVeiculosAguardando() {
-  const response = await fetch(`${GLOBAL_URL}?status=aguardando`);
+  const response = await fetch(`${GLOBAL_URL}/status/aguardando`);
   const data = await response.json();
 
   listarVeiculos(
@@ -13,7 +12,7 @@ async function carregarVeiculosAguardando() {
 }
 
 async function carregarVeiculosLavando() {
-  const response = await fetch(`${GLOBAL_URL}?status=lavando`);
+  const response = await fetch(`${GLOBAL_URL}/status/lavando`);
   const data = await response.json();
 
   listarVeiculos(
@@ -25,7 +24,7 @@ async function carregarVeiculosLavando() {
 }
 
 async function carregarVeiculosFinalizado() {
-  const response = await fetch(`${GLOBAL_URL}?status=finalizado`);
+  const response = await fetch(`${GLOBAL_URL}/status/finalizado`);
   const data = await response.json();
 
   listarVeiculos(data, document.querySelector("#lista_finalizado"), "", null);
@@ -66,26 +65,12 @@ function listarVeiculos(veiculos, lista, textoBotao, novoStatus) {
 
 async function atualizarStatus(id, status) {
   try {
-    const respostaVeiculo = await fetch(`${GLOBAL_URL}/${id}`);
-
-    if (!respostaVeiculo.ok) {
-      throw new Error("Veículo não encontrado");
-    }
-
-    const veiculo = await respostaVeiculo.json();
-
-    const response = await fetch(`${GLOBAL_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${GLOBAL_URL}/${id}/status?status=${encodeURIComponent(status)}`,
+      {
+        method: "PATCH",
       },
-      body: JSON.stringify({
-        marca: veiculo.marca,
-        modelo: veiculo.modelo,
-        placa: veiculo.placa,
-        status: status,
-      }),
-    });
+    );
 
     if (!response.ok) {
       throw new Error(`Erro ao atualizar: ${response.status}`);

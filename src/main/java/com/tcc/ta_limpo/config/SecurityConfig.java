@@ -1,6 +1,5 @@
 package com.tcc.ta_limpo.config;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +15,9 @@ public class SecurityConfig {
             throws Exception {
 
         http
+                .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/api/**")
+                )
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                         "/login",
@@ -23,6 +25,13 @@ public class SecurityConfig {
                         "/js/**",
                         "/assets/**"
                 ).permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/veiculos/**")
+                .hasAnyRole("ADMIN", "LAVADOR", "CONSULTOR")
+                .requestMatchers("/veiculos")
+                .hasAnyRole("ADMIN", "CONSULTOR")
+                .requestMatchers("/status")
+                .hasAnyRole("ADMIN", "LAVADOR", "CONSULTOR")
                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -38,7 +47,6 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/login?logout=true")
                 .permitAll()
                 );
-
         return http.build();
     }
 
@@ -47,12 +55,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public CommandLineRunner gerarSenha(PasswordEncoder passwordEncoder) {
-        return args -> {
-            System.out.println(
-                    passwordEncoder.encode("123456")
-            );
-        };
-    }
 }
